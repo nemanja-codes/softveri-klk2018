@@ -4,9 +4,14 @@
  */
 package controller;
 
+import baza.DBBroker;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Alat;
 import model.Inzenjer;
+import model.Lokacija;
+import model.Masina;
 
 /**
  *
@@ -16,6 +21,7 @@ public class Controller {
     private static Controller instance;
     private List<Inzenjer> inzenjeri = new ArrayList<>();
     private Inzenjer ulogovaniInzenjer = null;
+    private DBBroker dbb;
 
     public static Controller getInstance() {
         if(instance == null) {
@@ -27,6 +33,7 @@ public class Controller {
     
     
     private Controller() {
+        dbb = new DBBroker();
         Inzenjer i1 = new Inzenjer(1, "Nemanja", "Markovic", "neca123", "neca123");
         Inzenjer i2 = new Inzenjer(2, "Petar", "Petrovic", "pera123", "pera123");
         Inzenjer i3 = new Inzenjer(3, "Ana", "Avakumovic", "ana123", "ana123");
@@ -62,6 +69,22 @@ public class Controller {
             }
         }
         return null;
+    }
+
+    public List<Lokacija> vratiLokacije() {
+        return dbb.vratiLokacije();
+    }
+
+    public List<Alat> vratiAlate() {
+        return dbb.vratiAlate();
+    }
+
+    public boolean postojiMasina(int idLokacije) {
+        return dbb.postojiMasina(idLokacije);
+    }
+
+    public boolean ubaciMasinu(Masina m) throws SQLException {
+        return dbb.ubaciMasinu(m);
     }
     
     
